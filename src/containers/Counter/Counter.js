@@ -3,6 +3,8 @@ import { connect } from 'react-redux';
 
 import CounterControl from '../../components/CounterControl/CounterControl';
 import CounterOutput from '../../components/CounterOutput/CounterOutput';
+import './Counter.css';
+import * as actionType from '../../store/actions'
 
 class Counter extends Component {
 /*     state = {
@@ -34,11 +36,14 @@ class Counter extends Component {
                 <CounterControl label="Decrement" clicked={this.props.onDecrementCounter} />
                 <CounterControl label="Add 5" clicked={this.props.onAddCounter} />
                 <CounterControl label="Subtract 5" clicked={this.props.onSubtractCounter} />
-                <CounterControl label="Store Result" clicked={this.props.onStoreResult} />
                 <hr />
-                <ul>
+                <button onClick={() => this.props.onStoreResult(this.props.ctr)}>Store Result</button>
+                <ul className="ul">
                     {this.props.storedResults.map(strResult => (
-                        <li key={strResult.id} onClick={() => this.props.onDeleteResult(strResult.id)}>{strResult.value}</li>
+                         <li className="li" key={strResult.id} onClick={() => this.props.onDeleteResult(strResult.id)}>
+                         {strResult.value}
+                      </li>
+                       
                     ))}
                 </ul>
             </div>
@@ -51,8 +56,8 @@ class Counter extends Component {
 //receive the part of the state from the store, which is relevant for this component and put it into the ctr part of the object
 const mapStateToProps = state => {
     return {
-        ctr: state.counter,
-        storedResults: state.results
+        ctr: state.ctr.counter,
+        storedResults: state.res.results
     };
 };
 
@@ -60,12 +65,12 @@ const mapStateToProps = state => {
 // the action types are defined here, the content of the actions are defined in the reducer.js file
 const mapDispatchToProps = dispatch => {
     return {
-        onIncrementCounter: () => dispatch({type: 'INCREMENT'}),
-        onDecrementCounter: () => dispatch({type: 'DECREMENT'}),
-        onAddCounter: () => dispatch({type: 'ADD', val: 10}),
-        onSubtractCounter: () => dispatch({type: 'SUBTRACT', val: 15}),
-        onStoreResult: () => dispatch({type: 'STORE_RESULT'}),
-        onDeleteResult: (id) => dispatch({type: 'DELETE_RESULT', resultElId: id})
+        onIncrementCounter: () => dispatch({type: actionType.INCREMENT}),
+        onDecrementCounter: () => dispatch({type: actionType.DECREMENT}),
+        onAddCounter: () => dispatch({type: actionType.ADD, val: 10}),
+        onSubtractCounter: () => dispatch({type: actionType.SUBTRACT, val: 15}),
+        onStoreResult: (result) => dispatch({type: actionType.STORE_RESULT, result: result}),
+        onDeleteResult: (id) => dispatch({type: actionType.DELETE_RESULT, resultElId: id})
     };
 };
 
