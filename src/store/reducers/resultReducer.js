@@ -1,4 +1,4 @@
-import * as actionType from '../actions'
+import * as actionType from '../actions/actions'
 
 const initialState = {
     results: [],
@@ -8,7 +8,7 @@ const initialState = {
 const reducer = (state = initialState, action) => {
     switch ( action.type ) {
     case actionType.STORE_RESULT:
-        console.log(state.resultId)
+        console.log('storing result: ',action.result)
         return {
             ...state,
             resultId: state.resultId + 1,
